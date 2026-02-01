@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1st Wedding Anniversary 💍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<style>
+:root {
+  --primary-pink: #ff9a9e;
+  --gold: #d4af37;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:22px;
+  animation:float 6s linear infinite;
+  opacity:0.8;
+  z-index: 0;
+}
+@keyframes float{
+  from{transform:translateY(0) scale(1) rotate(0deg);opacity:1;}
+  to{transform:translateY(-120vh) scale(1.5) rotate(360deg);opacity:0;}
+}
+
+.container{
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  perspective:1500px;
+  z-index: 10;
+}
+
+.card{
+  width:92vw;
+  max-width:400px;
+  height:85vh;
+  max-height:650px;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius:20px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.3);
+}
+
+.card.open{
+  transform:rotateY(180deg);
+}
+
+.card-side{
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility:hidden;
+  border-radius:20px;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+/* Front Side */
+.card-front{
+  background: white;
+  border: 10px solid #fff;
+  outline: 2px solid var(--gold);
+  outline-offset: -15px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px;
+}
+
+.card-front h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.5rem;
+  color: #333;
+  margin: 0;
+}
+
+.card-front p {
+  font-style: italic;
+  color: #777;
+  margin-top: 10px;
+}
+
+.open-btn{
+  margin-top:40px;
+  padding:15px 35px;
+  font-size:1.1rem;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  background: var(--primary-pink);
+  color:white;
+  box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+  transition:0.3s;
+}
+
+/* Back Side */
+.card-back{
+  background: #fffafa;
+  transform:rotateY(180deg);
+  padding:25px;
+  text-align:center;
+}
+
+/* Polaroid Photo Style */
+.polaroid-container {
+  margin-bottom: 30px;
+}
+
+.polaroid {
+  background: white;
+  padding: 10px 10px 25px 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  margin: 10px auto;
+  width: 90%;
+  transform: rotate(-2deg);
+  transition: 0.3s;
+}
+
+.polaroid:nth-child(even) {
+  transform: rotate(3deg);
+}
+
+.polaroid img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.counter-box {
+  background: rgba(255, 154, 158, 0.1);
+  padding: 15px;
+  border-radius: 15px;
+  margin: 20px 0;
+}
+
+.counter-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e84393;
+  display: block;
+}
+
+.message{
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #444;
+  margin-top: 20px;
+}
+
+.signature {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8rem;
+  color: #e84393;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+// Floating Hearts Logic
+const hearts=["💖","💘","💝","💕","❤️","✨"];
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText=hearts[Math.floor(Math.random()*hearts.length)];
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(4+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},600);
+</script>
+
+<div class="container">
+  <div class="card" id="card">
+
+    <div class="card-side card-front">
+      <h1>Happy 1st Anniversary</h1>
+      <p>A Year of Beautiful Memories</p>
+      <div style="font-size: 3rem; margin: 20px 0;">💍</div>
+      <button class="open-btn" onclick="openCard()">Open Story 📖</button>
+    </div>
+
+    <div class="card-side card-back">
+      <div class="polaroid-container">
+        <div class="polaroid">
+          <img src="couple.jpg" alt="Wedding Day">
+        </div>
+
+      <div class="counter-box">
+        <span id="days-count" class="counter-number">363</span>
+        <span style="font-size: 0.9rem; color: #666;">Days of Love & Laughter</span>
+      </div>
+
+      <div class="message">
+        To my dearest <b>Di & Jija Ji</b>,<br>
+        Watching your love story unfold over this past year has been a joy. May your bond grow stronger with every sunset you share. 🥂
+      </div>
+
+      <div class="signature">With love, Sonuuu </div>
+      <div style="color: #bbb; font-size: 0.8rem; margin-top: 10px;">03.02.2025 – Forever</div>
+    </div>
+
+  </div>
+</div>
+
+<audio id="bgm" loop>
+  <source src="Our Cycle Bgm Ringtone Download - MobCup.Com.Co.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function openCard(){
+  document.getElementById("card").classList.add("open");
+  document.getElementById("bgm").play();
+  
+  // Confetti Burst
+  var duration = 3 * 1000;
+  var end = Date.now() + duration;
+
+  (function frame() {
+    confetti({
+      particleCount: 3,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+      colors: ['#ff9a9e', '#fad0c4', '#d4af37']
+    });
+    confetti({
+      particleCount: 3,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+      colors: ['#ff9a9e', '#fad0c4', '#d4af37']
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  }());
+}
+
+// Calculate actual days since wedding
+const weddingDate = new Date("2025-02-03");
+const today = new Date();
+const diffTime = Math.abs(today - weddingDate);
+const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+document.getElementById("days-count").innerText = diffDays;
+</script>
+
+</body>
+</html>
